@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #box {
+            width: 220px;
+            height: 260px;
+            margin: 100px auto;
+            display: none;
+            background-image: url(./enverlop.jpg);
+            background-size: 220px;
+            border-radius: 5px;
+        }
+
+        /* #box {
+            width: 220px;
+            height: 260px;
+            background-color: #f44336;
+            margin: 100px auto;
+            text-align: center;
+            display: block;
+            padding-top: 25px;
+            color: #fff;
+            font-size: 12px;
+        }
+
+        #box img {
+            width: 32px;
+            border: 1px solid #f44336;
+            border-radius: 4px;
+        }
+
+        .open {
+            font-size: 25px;
+            width: 66px;
+            height: 66px;
+            background-color: #EBCD9B;
+            line-height: 66px;
+            margin: 0 auto;
+            border-radius: 50%;
+            color: #000;
+        } */
+    </style>
+</head>
+
+<body>
+    <input id="txt1" type="text" placeholder="金额" />
+    <input id="txt2" type="text" placeholder="个数" />
+    <input id="btn" type="button" value="装入红包" />
+
+    <div id="box"></div>
+    <!-- <div id="box">
+        <p>
+            <img src="./head.jpg" alt="">
+        </p>
+        <p class="username">j</p>
+        <p class="title">给你发了一个红包</p>
+        <p class="message">恭喜发财，大吉大利！</p>
+        <div class="open">開</div>
+    </div> -->
+    <script>
+        var btn = document.getElementById("btn");
+        var txt1 = document.getElementById("txt1");
+        var txt2 = document.getElementById("txt2");
+        var env = {};
+        btn.onclick = function () {
+            env.money = parseInt(txt1.value);
+            if (!env.money) {
+                alert('请输入正确的金额');
+                return;
+            }
+            env.count = parseInt(txt2.value);
+            if (!env.count) {
+                alert('请输入正确的红包个数');
+                return;
+            }
+            box.style.display = "block";
+            txt1.style.display = "none";
+            txt2.style.display = "none";
+            btn.style.display = "none";
+        };
+        box.onclick = function () {
+            //this.style.display = "none";
+            var m = getRandomMoney(env);
+            if (m !== Infinity) {
+                console.log(m);
+            } else {
+                console.log("红包被抢光了");
+            }
+        };
+
+        function getRandomMoney(envelop) {
+            if (envelop.count === 1) {
+                envelop.count--;
+                return Math.round(envelop.money * 100) / 100;
+            } else {
+                var rdm = Math.random();
+                var min = 0.01;
+                //leftMoneyPackage.remainMoney / leftMoneyPackage.remainSize是一个的钱
+                //把剩余金额求平均数 每一个应该是多少 然后可以获取的红包金额是 一个的0-2倍
+                var max = envelop.money / envelop.count * 2;
+                var money = rdm * max;
+                money = money <= min ? 0.01 : money;
+                money = Math.floor(money * 100) / 100;
+                envelop.count--
+                envelop.money -= money;
+                return money;
+            }
+        }
+    </script>
+</body>
+
+</html>
